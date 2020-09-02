@@ -19,6 +19,6 @@ git remote add  origin giturl
 git push --set-stream origin master
 
 
-git config uaer.name=
-git config  user.email=
+git config --global uaer.name "username"
+git config --global user.email "email"
 git config credential.helper store
