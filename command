@@ -21,4 +21,4 @@ git push --set-stream origin master
 
 git config uaer.name=
 git config  user.email=
-
+git config credential.helper store
