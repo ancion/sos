@@ -154,7 +154,6 @@ same as @Component
 </configuration>
 ```
 
-
 ### Bean
 
 * using this @Bean annotation to create configBean
