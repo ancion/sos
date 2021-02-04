@@ -42,7 +42,7 @@ or help you to do something with some rule.
     <context:include-filter type='assignabele' expression='*.*.user'/>
     include specified annotaion
     <context:include-filter type='annotaion' expression='*.*.@Log'/>
-    include aspect (only user expression are class or package)
+    include aspect (only use expression are class or package)
     <context:include-filter type='aspectj' expression='com.edu..*'/>
     include exclude regex
     <context:include-filter type='regesx' expression=''/>
@@ -154,21 +154,97 @@ same as @Component
 </configuration>
 ```
 
+
 ### Bean
 
 * using this @Bean annotation to create configBean
 * function return value as bean
 * beanName default is functionName(first char lowercase)
 * @Bean("beanName") could give a custom name 
+* @Scope("Singleton"|"protoType") could control number of instance 
+
+### @ComponentScan
+
+* exludeFilters
+```java
+@ComponentScan(basePacage = 'com.edu',
+               excludeFilters = {@ComponentScan.Fliter(type=FilterType.ANNOTATION,value={org.springframework.sterotype.Service'}),
+                                 @ComponentScan.Filter(type=FilterType.ASPECTJ,pattern="*..User")})
+type=FilterType.ANNOTATION          value
+               .ASSIGNABLE_TYPE     value
+               .ASPECTJ             pattern
+               .REGEX               pattern
+               .CUSTOM              value
+```
+* includeFilters
+```java
+@ComponentScan(basePacage = 'com.edu',useDefaultFilters = false,
+               includeFilters = {@ComponentScan.Fliter(type=FilterType.ANNOTATION,value={org.springframework.sterotype.Service'}),
+                                 @ComponentScan.Filter(type=FilterType.ASPECTJ,pattern="*..User")})
+type=FilterType.ANNOTATION          value
+               .ASSIGNABLE_TYPE     value
+               .ASPECTJ             pattern
+               .REGEX               pattern
+               .CUSTOM              value
+```
+
+### @Import
+
++ Spring framework using to integrate other framework
++ multiple bean integrate 
+
+### configuration priority
+
+* @Component(and same type) < @Bean < Bean Tag in *.xml file
+* If you  want a bean to override another using a prioriter configuration
+must use same `id`.
+
+### integrate multiple configuration
+```java
+// 1、definde a package as config 
+ApplicationContext ctx = new  AnnotationConfigApplicationContext("com.edu.config")
+ApplicationContext ctx = 
+    new  AnnotationConfigApplicationContext(AppConfig1.class,AppConfig2.class,...)
+// 2、@Import integrate other config into main configclass
+
+    @Configuration
+    @Import(AppConfig2.class)
+    public class AppConfig{
+
+    }
+// 3、@ImportResource integrate annotation configuration and *.xml file
+    @ImportResource("applicationContext.xml")
+    @Configuration
+    public class AppConfig{
+
+    }
+```
+### four side in one box
+
++ 1、schema
+    ```xml
+        <context:property-placeholder location="classpath:log.properties"/>
+    ```
++ 2、specific functional Annotation【recommend】
+    ```java
+        @PropertSource("classpath:log.properties")
+    ```
++ 3、<bean> tag
+    ```xml
+        <bean id='propertyholder' class='org.springframework.support.PropertySourcesPlaceholderConfigurer'>
+            <property name='location' value='classpath:log.properties'>
+        </bean>
+    ```
++ 4、@Bean annotation
+    ```java
+        @Bean
+        public PropertySourcesPlaceholderConfigurer configurer(){
+            PropertySourcesPlaceholderConfigurer configurer = 
+                new PropertySourcesPlaceholderConfigurer();
+                configurer.setLocation(new ClassPathResource("log.properties"));
+            return configurer;
+        }
+    ```
 
 
-
-
-
-
-
-
-
-
-
-
+>>>>>>> 029f287ac45de6365e8793ef3b3f7955b77a5379
