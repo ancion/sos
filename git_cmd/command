@@ -1,0 +1,24 @@
+git init
+
+git add .
+
+git commit -m "some instruments"
+
+git reset  filename
+
+git rm --cache filename  # remove a stracts of file 
+
+git branch branchname
+
+git checkout branchname
+
+git merge branchname  #merge to current branch
+
+git remote add  origin giturl
+
+git push --set-stream origin master
+
+
+git config --global uaer.name "username"
+git config --global user.email "email"
+git config credential.helper store

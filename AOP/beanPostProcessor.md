@@ -4,7 +4,7 @@ could get a proxy Object.
 
 ## BeanPostProcessor is a interface
 you should add you own reprocessing content in this interface method.
-This interface use the principle of dynamic proxy.
+dynamic proxy is the core of this interface
 
 ```java
     // before Initialization reprocessing,then return bean

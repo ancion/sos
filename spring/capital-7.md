@@ -50,7 +50,7 @@
 
 #### 初始化阶段
 > Spring 在创建对象后就会调用对象的初始化方法，完成初始化操作，
-- 初始化方法提供：程序员更具希求进行开发，提供，最终提供初始化方法
+- 初始化方法提供：程序员根据需求进行开发，提供，最终提供初始化方法
 - 初始化方法调用：Spring 调用
 
 a. 实现 initializingBean 接口
@@ -74,13 +74,12 @@ b. 自定义方法进行初始化，然后在配置文件中配置为初始化�
   * 好处:可以减少对Spring框架的耦合*
 
 ```java
-    public class Product implements InitializingBean {
+    public class Product {
         public Product() {
             super();
             System.out.println("测试创建时间: Produst");
         }
         // 对象创建完成后进行初始化操作。
-        @Override
         public void afterPropertiesSet() throws Exception {
             System.out.println("initializing : Product");
         }
@@ -104,7 +103,7 @@ c. 细节分析
 
 #### 销毁阶段
 
- Spring在销毁对象之前，会调用对象的调用方法，完成销毁操作
+ Spring在销毁对象之前，会调用对象的销毁方法，完成销毁操作
  1. Spring 什么时候销毁创建的对象 --> ctx.close()
  2. 销毁方法：程序员根据自己需求自己定义，Spring 来调用
  3. 一般销毁的操作是资源释放的操作--> 数据库，网络，IO。。。

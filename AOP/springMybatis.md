@@ -12,7 +12,7 @@
 ```
 ## Mybatis code step
 - 1.POJO entity
-- 2.entity TypeAlias
+- 2.entity TypeAliases
 - 3.database-table
 - 4.Dao interface
 - 5.mapper.xml file
@@ -23,7 +23,7 @@ public class TestMybatis{
 
     public static void main(String[] args){
         // get configuration file InputStream 
-        InputStream in = Resource.getResourceAsStream("mybatis-config.xml");
+        InputStream in = Resources.getResourceAsStream("mybatis-config.xml");
         SqlSessionFactory sqlFactory = new SqlSessionFactoryBuilder().build(in);
         
         // get sqlSession
@@ -88,7 +88,7 @@ public class TestMybatis{
         InputStream in = Resource.getResourceAsStream("mybatis-config.xml");
         SqlSessionFactory sqlFactory = new SqlSessionFactoryBuilder().build(in);
 -->
-<bean id='sqlSessionFactoryBean' class='org.mybatis.spring.SqlSessionFactoryBuilderBean'>
+<bean id='sqlSessionFactoryBean' class='org.mybatis.spring.SqlSessionFactoryBean'>
     <property name='dataSource' ref='dataSource'/>
     <property name='typeAliasesPackage' value='com.edu.entity'/>
     <property name='mapperLocation' value='classpath:/mapper/*.xml'/>
@@ -105,4 +105,4 @@ public class TestMybatis{
 **Atention:** 
 - default:mybatis's own dataSource  Connection.setAutoCommit(false)
 - druidDataSource or C4p0 don't change the setAutoCommit(true),will commit transaction
-automatic.
+  automatic.

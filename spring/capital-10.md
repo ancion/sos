@@ -6,9 +6,10 @@
 
     **BeanPostProcessor 是一个接口，实际的加工过程在具体的方法中进行实现就可以了**
 ```java
-/* 从这个接口中的俩个需要实现的方法就知道这两个方法分别是在初始化之前和初始化之后
-*
-*/ 执行的
+/* 
+* 从这个接口中的俩个需要实现的方法就知道这两个方法分别是在初始化之前和初始化之后
+* 执行的
+*/ 
 public interface BeanPostProcessor {
     /*
     * 这个方法是在构造了bean之后，完成了注入，执行这个方法，之后再交给initializing
@@ -43,8 +44,7 @@ public interface BeanPostProcessor {
 ```java
 /**
  * 这个加工的过程是针对所有的Spring 工厂中产生的bean来进行操作的,
- * 这里为了演示的效果再配置文件中仅仅是配置了一个bean,注入了属性名称
- * 通过这个后置处理演示更改这个名称看一下这个更改的效果。
+ * 注入了属性名称,通过这个后置处理演示更改这个名称看一下这个更改的效果。
  */
 public class MyBeanProcessor implements BeanPostProcessor {
 	@Override
@@ -58,7 +58,7 @@ public class MyBeanProcessor implements BeanPostProcessor {
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         /*
-        * 由于这个方法会作用与所有的Spring工厂生产的bean,因此这里因该是由一个类型保护的
+        * 由于这个方法会作用与所有的Spring工厂生产的bean,因此这里因该是有一个类型保护的
         * 不然这个代码在处理其他bean对象的时候会异常，运行结果也会出现异常。
         */
         if(bean instanceof User){
@@ -78,7 +78,7 @@ public class MyBeanProcessor implements BeanPostProcessor {
          测试 BeanPostProcessor 的使用,在配置文件中配置这个 bean 就可以了，
          他会作用于所有的工厂创建出来的bean,
     -->
-    <bean id="mybeanprocessot" class="com.edu.beanpostprocessor.MyBeanProcessor"/>
+    <bean id="mybeanprocessor" class="com.edu.beanpostprocessor.MyBeanProcessor"/>
 
     <!-- 配置文件中注入的名称是"张三" 通过后置处理会将名称改编成"里斯"-->
     <bean id="user" class="com.edu.pojo.User">
@@ -87,7 +87,8 @@ public class MyBeanProcessor implements BeanPostProcessor {
     </bean>
 ```
 
-
-
+> Spring工厂是如何使用BeanPos他Processor 对对象进行代理加工，使得接口返回的是一个
+  代理对象
+![Spring 工厂进行bean代理的过程](beanPostProcessor.png)
 
 
